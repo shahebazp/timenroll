@@ -13,9 +13,9 @@
 body {
   min-height: 100vh;
   font-family: "Segoe UI", system-ui, sans-serif;
-  background: linear-gradient(135deg, #00c9a7, #00b4d8);
+  background: #f6f9fb;
   display: flex;
-  color: #ffffff;
+  color: #1f2937;
 }
 
 /* =========================
@@ -34,9 +34,7 @@ body {
   left: 0;
   width: 240px;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: linear-gradient(180deg, #00c9a7, #00b4d8);
   padding: 24px 16px;
   z-index: 100;
 }
@@ -60,11 +58,10 @@ body {
   padding: 14px 16px;
   border-radius: 12px;
   margin-bottom: 10px;
-  cursor: pointer;
   font-size: 15px;
-  opacity: 0.9;
   text-decoration: none;
   color: #ffffff;
+  opacity: 0.9;
   transition: background 0.2s ease, opacity 0.2s ease;
 }
 
@@ -81,21 +78,23 @@ body {
   flex: 1;
   margin-left: 240px;
   padding: 32px;
+  background: #f6f9fb;
 }
 
 /* Header */
 .desktop-header h1 {
   font-size: 34px;
   font-weight: 700;
+  color: #111827;
 }
 
 .desktop-header p {
   margin-top: 4px;
-  opacity: 0.9;
+  color: #6b7280;
 }
 
 /* =========================
-   DASHBOARD CARDS
+   DASHBOARD CARDS (LIGHT)
 ========================= */
 .cards {
   display: grid;
@@ -105,23 +104,23 @@ body {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px);
-  border-radius: 22px;
-  padding: 40px 20px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 36px 20px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .card h2 {
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 700;
+  color: #00a896;
 }
 
 .card p {
   margin-top: 10px;
   font-size: 15px;
-  opacity: 0.9;
+  color: #4b5563;
 }
 
 /* =========================
@@ -142,8 +141,8 @@ body {
     position: sticky;
     top: 0;
     z-index: 1500;
-    background: rgba(255, 255, 255, 0.18);
-    backdrop-filter: blur(18px);
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
   }
 
   .hamburger {
@@ -156,6 +155,7 @@ body {
   .mobile-header .title {
     font-size: 20px;
     font-weight: 600;
+    color: #111827;
   }
 
   /* Sidebar mobile behaviour */
@@ -188,7 +188,7 @@ body {
 }
 
 /* =========================
-   LOGOUT MODAL (ISOLATED)
+   LOGOUT MODAL (LIGHT)
 ========================= */
 .logout-modal {
   position: fixed !important;
@@ -196,25 +196,24 @@ body {
   display: none;
   align-items: center !important;
   justify-content: center !important;
-  background: rgba(0, 0, 0, 0.45) !important;
+  background: rgba(0, 0, 0, 0.35) !important;
   z-index: 99999 !important;
 }
 
 .logout-box {
-  position: relative;
-  max-width: 320px;
-  width: 90%;
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(18px);
+  background: #ffffff;
+  color: #1f2937;
   border-radius: 18px;
   padding: 22px 26px;
+  max-width: 320px;
+  width: 90%;
   text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 /* =========================
    LOGOUT MODAL BUTTON UI
 ========================= */
-
 .logout-actions {
   display: flex;
   gap: 14px;
@@ -232,20 +231,14 @@ body {
   transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
-/* Cancel button */
 .cancel-btn {
-  background: rgba(255, 255, 255, 0.35);
-  color: #ffffff;
+  background: #e5e7eb;
+  color: #374151;
 }
 
-.cancel-btn:hover {
-  opacity: 0.9;
-}
-
-/* Logout button (primary) */
 .confirm-btn {
-  background: #ffffff;
-  color: #00a896;
+  background: #00a896;
+  color: #ffffff;
 }
 
 .confirm-btn:hover {
