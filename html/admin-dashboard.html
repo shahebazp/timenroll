@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timeNroll | Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="title">timeNroll</div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+
+    <!-- Main -->
+    <main class="main">
+        <header class="desktop-header">
+            <h1>timeNroll</h1>
+            <p>Admin Dashboard</p>
+        </header>
+
+        <section class="cards">
+            <div class="card">
+                <h2 id="teacherCount">0</h2>
+                <p>Total Teachers</p>
+            </div>
+            <div class="card">
+                <h2 id="studentCount">0</h2>
+                <p>Total Students</p>
+            </div>
+            <div class="card">
+                <h2 id="classCount">0</h2>
+                <p>Total Classes</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/page-specific.js"></script>
+    <script src="../js/common.js"></script>
+
+</body>
+
+</html>

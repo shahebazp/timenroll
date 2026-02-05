@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timeNroll | Class Students</title>
+
+    <!-- Base dashboard styles -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Page specific styles -->
+    <link rel="stylesheet" href="../css/class-students.css">
+</head>
+
+<body>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="title">timeNroll</div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+
+    <!-- Main -->
+    <main class="main">
+        <h2 id="title"></h2>
+
+        <div class="glass-box">
+            <div class="form-grid">
+                <div class="field">
+                    <label>Roll Number</label>
+                    <input id="roll">
+                </div>
+
+                <div class="field">
+                    <label>First Name</label>
+                    <input id="fname" oninput="lettersOnly(this)">
+                </div>
+
+                <div class="field">
+                    <label>Middle Name</label>
+                    <input id="mname" oninput="lettersOnly(this)">
+                </div>
+
+                <div class="field">
+                    <label>Last Name</label>
+                    <input id="lname" oninput="lettersOnly(this)">
+                </div>
+
+                <div class="field">
+                    <label>Email (optional)</label>
+                    <input id="email">
+                </div>
+
+                <div class="field">
+                    <label>Mobile (optional)</label>
+                    <input id="mobile">
+                </div>
+            </div>
+
+            <br>
+            <button class="save-btn" onclick="saveStudent()">Save Student</button>
+        </div>
+
+        <div id="list"></div>
+    </main>
+
+    <!-- JS -->
+    <script src="../js/class-students.js"></script>
+    <script src="../js/page-specific.js"></script>
+    <script src="../js/common.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: linear-gradient(135deg, #00c9a7, #00b4d8);
+  display: flex;
+  color: #ffffff;
+}
+
+/* ---------- MOBILE HEADER ---------- */
+.mobile-header {
+  display: none;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar {
+  width: 240px;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding: 20px;
+}
+
+.logo-box {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
+
+.logo {
+  width: 60px;
+  filter: brightness(0) invert(1);
+}
+
+/* Sidebar links FIXED */
+.sidebar nav a {
+  display: block;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  opacity: 0.9;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ---------- MAIN ---------- */
+.main {
+  flex: 1;
+  padding: 32px;
+}
+
+.desktop-header h1 {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.desktop-header p {
+  margin-top: 4px;
+  opacity: 0.9;
+}
+
+/* ---------- CARDS ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  border-radius: 22px;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+  font-size: 52px;
+  font-weight: 700;
+}
+
+.card p {
+  margin-top: 10px;
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 768px) {
+
+  body {
+    flex-direction: column;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(18px);
+  }
+
+  .hamburger {
+    position: absolute;
+    left: 16px;
+    font-size: 26px;
+    cursor: pointer;
+  }
+
+  .mobile-header .title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100vh;
+    z-index: 2000;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .desktop-header {
+    display: none;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .main {
+    padding: 20px;
+  }
+}

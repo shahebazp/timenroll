@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>timeNroll | Add Teachers</title>
+
+    <!-- Base Dashboard CSS -->
+    <link rel="stylesheet" href="../css/dashboard.css">
+
+    <!-- Page-specific CSS -->
+    <link rel="stylesheet" href="../css/add-teachers.css">
+</head>
+
+<body>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <div class="title">timeNroll</div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar-container"></div>
+
+    <!-- Main -->
+    <main class="main">
+
+        <div class="page-header">
+            <h2>Add Teachers</h2>
+            <button class="add-btn" onclick="openAdd()">+ Add Teacher</button>
+        </div>
+
+        <div class="glass-box" id="formBox" style="display:none;">
+            <div class="form-grid">
+
+                <div class="field">
+                    <label>Teacher ID</label>
+                    <input id="tid">
+                </div>
+
+                <div class="field">
+                    <label>First Name</label>
+                    <input id="fname" oninput="lettersOnly(this)">
+                </div>
+
+                <div class="field">
+                    <label>Middle Name</label>
+                    <input id="mname" oninput="lettersOnly(this)">
+                </div>
+
+                <div class="field">
+                    <label>Last Name</label>
+                    <input id="lname" oninput="lettersOnly(this)">
+                </div>
+
+                <div class="field">
+                    <label>Email</label>
+                    <input id="email">
+                </div>
+
+                <div class="field">
+                    <label>Mobile</label>
+                    <input id="mobile">
+                </div>
+
+            </div>
+
+            <br>
+            <strong>Assign Classes</strong><br><br>
+            <div id="classList"></div>
+
+            <button class="save-btn" onclick="saveTeacher()">Save</button>
+        </div>
+
+        <div id="teacherList"></div>
+
+    </main>
+
+    <!-- JS -->
+    <script src="../js/add-teachers.js"></script>
+    <script src="../js/page-specific.js"></script>
+    <script src="../js/common.js"></script>
+
+</body>
+
+</html>
