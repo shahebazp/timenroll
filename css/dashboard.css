@@ -1,9 +1,15 @@
+/* =========================
+   RESET
+========================= */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* =========================
+   BASE
+========================= */
 body {
   min-height: 100vh;
   font-family: "Segoe UI", system-ui, sans-serif;
@@ -12,24 +18,34 @@ body {
   color: #ffffff;
 }
 
-/* ---------- MOBILE HEADER ---------- */
+/* =========================
+   MOBILE HEADER
+========================= */
 .mobile-header {
   display: none;
 }
 
-/* ---------- SIDEBAR ---------- */
+/* =========================
+   SIDEBAR (DESKTOP)
+========================= */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 240px;
+  height: 100vh;
   background: rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  padding: 20px;
+  padding: 24px 16px;
+  z-index: 100;
 }
 
+/* Logo */
 .logo-box {
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
   cursor: pointer;
 }
 
@@ -38,7 +54,7 @@ body {
   filter: brightness(0) invert(1);
 }
 
-/* Sidebar links FIXED */
+/* Sidebar links */
 .sidebar nav a {
   display: block;
   padding: 14px 16px;
@@ -49,19 +65,25 @@ body {
   opacity: 0.9;
   text-decoration: none;
   color: #ffffff;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
-.sidebar nav a.active,
-.sidebar nav a:hover {
+.sidebar nav a:hover,
+.sidebar nav a.active {
   background: rgba(255, 255, 255, 0.25);
+  opacity: 1;
 }
 
-/* ---------- MAIN ---------- */
+/* =========================
+   MAIN CONTENT
+========================= */
 .main {
   flex: 1;
+  margin-left: 240px;
   padding: 32px;
 }
 
+/* Header */
 .desktop-header h1 {
   font-size: 34px;
   font-weight: 700;
@@ -72,7 +94,9 @@ body {
   opacity: 0.9;
 }
 
-/* ---------- CARDS ---------- */
+/* =========================
+   DASHBOARD CARDS
+========================= */
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -100,13 +124,16 @@ body {
   opacity: 0.9;
 }
 
-/* ---------- MOBILE ---------- */
+/* =========================
+   MOBILE VIEW
+========================= */
 @media (max-width: 768px) {
 
   body {
     flex-direction: column;
   }
 
+  /* Mobile header */
   .mobile-header {
     display: flex;
     align-items: center;
@@ -114,7 +141,7 @@ body {
     height: 60px;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1500;
     background: rgba(255, 255, 255, 0.18);
     backdrop-filter: blur(18px);
   }
@@ -131,29 +158,55 @@ body {
     font-weight: 600;
   }
 
+  /* Sidebar mobile behaviour */
   .sidebar {
-    position: fixed;
-    top: 0;
     left: -100%;
     width: 260px;
-    height: 100vh;
-    z-index: 2000;
     transition: left 0.3s ease;
+    z-index: 2000;
   }
 
   .sidebar.open {
     left: 0;
   }
 
+  /* Hide desktop header */
   .desktop-header {
     display: none;
   }
 
+  /* Cards stack */
   .cards {
     grid-template-columns: 1fr;
   }
 
+  /* Main padding */
   .main {
+    margin-left: 0;
     padding: 20px;
   }
+}
+
+/* =========================
+   LOGOUT MODAL (ISOLATED)
+========================= */
+.logout-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.45) !important;
+  z-index: 99999 !important;
+}
+
+.logout-box {
+  position: relative;
+  max-width: 320px;
+  width: 90%;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 22px 26px;
+  text-align: center;
 }
