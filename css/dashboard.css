@@ -72,7 +72,7 @@ body {
 }
 
 /* =========================
-   MAIN CONTENT
+   MAIN LAYOUT
 ========================= */
 .main {
   flex: 1;
@@ -81,20 +81,33 @@ body {
   background: #f6f9fb;
 }
 
-/* Header */
+/* =========================
+   PAGE SURFACE (KEY FIX)
+========================= */
+.page {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  min-height: calc(100vh - 64px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* =========================
+   HEADERS
+========================= */
 .desktop-header h1 {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
   color: #111827;
 }
 
 .desktop-header p {
-  margin-top: 4px;
+  margin-top: 6px;
   color: #6b7280;
 }
 
 /* =========================
-   DASHBOARD CARDS (LIGHT)
+   DASHBOARD CARDS
 ========================= */
 .cards {
   display: grid;
@@ -121,6 +134,87 @@ body {
   margin-top: 10px;
   font-size: 15px;
   color: #4b5563;
+}
+
+/* =========================
+   EMPTY STATE (IMPORTANT)
+========================= */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: #6b7280;
+}
+
+.empty-state h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.empty-state p {
+  font-size: 15px;
+}
+
+.empty-state button {
+  margin-top: 18px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  border: none;
+  background: #00a896;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   LOGOUT MODAL
+========================= */
+.logout-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.35) !important;
+  z-index: 99999 !important;
+}
+
+.logout-box {
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 18px;
+  padding: 22px 26px;
+  max-width: 320px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Logout buttons */
+.logout-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.logout-actions button {
+  flex: 1;
+  padding: 12px 0;
+  border-radius: 14px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.confirm-btn {
+  background: #00a896;
+  color: #ffffff;
 }
 
 /* =========================
@@ -158,7 +252,7 @@ body {
     color: #111827;
   }
 
-  /* Sidebar mobile behaviour */
+  /* Sidebar mobile */
   .sidebar {
     left: -100%;
     width: 260px;
@@ -175,77 +269,19 @@ body {
     display: none;
   }
 
-  /* Cards stack */
+  /* Stack cards */
   .cards {
     grid-template-columns: 1fr;
   }
 
-  /* Main padding */
+  /* Main reset */
   .main {
     margin-left: 0;
-    padding: 20px;
+    padding: 16px;
   }
-}
 
-/* =========================
-   LOGOUT MODAL (LIGHT)
-========================= */
-.logout-modal {
-  position: fixed !important;
-  inset: 0 !important;
-  display: none;
-  align-items: center !important;
-  justify-content: center !important;
-  background: rgba(0, 0, 0, 0.35) !important;
-  z-index: 99999 !important;
-}
-
-.logout-box {
-  background: #ffffff;
-  color: #1f2937;
-  border-radius: 18px;
-  padding: 22px 26px;
-  max-width: 320px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* =========================
-   LOGOUT MODAL BUTTON UI
-========================= */
-.logout-actions {
-  display: flex;
-  gap: 14px;
-  margin-top: 22px;
-}
-
-.logout-actions button {
-  flex: 1;
-  padding: 12px 0;
-  border-radius: 14px;
-  border: none;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-}
-
-.cancel-btn {
-  background: #e5e7eb;
-  color: #374151;
-}
-
-.confirm-btn {
-  background: #00a896;
-  color: #ffffff;
-}
-
-.confirm-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-.confirm-btn:active {
-  transform: scale(0.96);
+  .page {
+    padding: 24px;
+    border-radius: 16px;
+  }
 }
