@@ -4,50 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>timeNroll | Admin Dashboard</title>
-
+    <title>Dashboard | TimeEnroll</title>
     <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 
 <body>
 
-    <!-- Mobile Header -->
-    <header class="mobile-header">
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-        <div class="title">timeNroll</div>
-    </header>
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="../assets/images/timenroll-logo-short.png" alt="Logo">
+        </div>
+        <nav>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="add-teachers.html">Teachers</a>
+            <a href="add-students.html">Students</a>
+            <a href="add-classes.html">Classes</a>
+            <a href="timetable.html">Timetable</a> <a href="#" onclick="logout()"
+                style="margin-top: 20px; color: #ffadad;">Logout</a>
+        </nav>
+    </aside>
 
-    <!-- Sidebar -->
-    <div id="sidebar-container"></div>
-
-
-    <!-- Main -->
     <main class="main">
-        <header class="desktop-header">
-            <h1>timeNroll</h1>
-            <p>Admin Dashboard</p>
-        </header>
+        <h1 class="header-title">Admin Dashboard</h1>
+        <p class="header-subtitle">Overview of your school data</p>
 
-        <section class="cards">
-            <div class="card">
+        <div class="stats-grid">
+            <div class="stat-card">
                 <h2 id="teacherCount">0</h2>
-                <p>Total Teachers</p>
+                <p>Teachers</p>
             </div>
-            <div class="card">
+            <div class="stat-card">
                 <h2 id="studentCount">0</h2>
-                <p>Total Students</p>
+                <p>Students</p>
             </div>
-            <div class="card">
+            <div class="stat-card">
                 <h2 id="classCount">0</h2>
-                <p>Total Classes</p>
+                <p>Classes</p>
             </div>
-        </section>
+        </div>
     </main>
 
-    <script src="../js/dashboard.js"></script>
-    <script src="../js/page-specific.js"></script>
     <script src="../js/common.js"></script>
-
+    <script src="../js/dashboard.js"></script>
 </body>
 
 </html>

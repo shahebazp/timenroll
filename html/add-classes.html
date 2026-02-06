@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes | TimeEnroll</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="../assets/images/timenroll-logo-short.png" alt="Logo">
+        </div>
+        <nav>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="add-teachers.html">Teachers</a>
+            <a href="add-students.html">Students</a>
+            <a href="add-classes.html" class="active">Classes</a>
+            <a href="timetable.html">Timetable</a>
+            <a href="#" onclick="logout()" style="margin-top: 20px; color: #ffadad;">Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <h1 class="header-title">Manage Classes</h1>
+        <p class="header-subtitle">Create structured classes for your college</p>
+
+        <div class="glass-panel" style="max-width: 700px; margin-bottom: 30px;">
+            <h3 style="margin-bottom: 20px;">Add New Class</h3>
+
+            <div class="form-grid" style="grid-template-columns: repeat(4, 1fr); gap: 15px;">
+
+                <div class="input-group">
+                    <label>Course</label>
+                    <select id="course">
+                        <option value="BCA">BCA</option>
+                        <option value="BCS">BCS</option>
+                        <option value="BSC-IT">BSC-IT</option>
+                        <option value="BSC">BSC</option>
+                        <option value="B.Com">B.Com</option>
+                        <option value="BBA">BBA</option>
+                        <option value="BA">BA</option>
+                        <option value="MCA">MCA</option>
+                        <option value="MCS">MCS</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Year</label>
+                    <select id="year">
+                        <option value="FY">FY (1st)</option>
+                        <option value="SY">SY (2nd)</option>
+                        <option value="TY">TY (3rd)</option>
+                        <option value="Part-I">Part-I</option>
+                        <option value="Part-II">Part-II</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Semester</label>
+                    <select id="sem">
+                        <option value="I">Sem I</option>
+                        <option value="II">Sem II</option>
+                        <option value="III">Sem III</option>
+                        <option value="IV">Sem IV</option>
+                        <option value="V">Sem V</option>
+                        <option value="VI">Sem VI</option>
+                        <option value="VII">Sem VII</option>
+                        <option value="VIII">Sem VIII</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Div</label>
+                    <select id="div">
+                        <option value="A">Div A</option>
+                        <option value="B">Div B</option>
+                        <option value="C">Div C</option>
+                        <option value="D">Div D</option>
+                        <option value="No Div">No Div</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <button class="btn-primary" onclick="addClass()" style="width: 100%; margin-top: 10px;">Create
+                Class</button>
+        </div>
+
+        <h3 style="margin-bottom: 15px; color:#2d3436;">Existing Classes</h3>
+        <div id="classList" class="stats-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        </div>
+    </main>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/add-classes.js"></script>
+</body>
+
+</html>

@@ -7,10 +7,10 @@ function render() {
 
   if (classes.length === 0) {
     classGrid.innerHTML = `
-      <div class="class-card">
+      <div class="glass-panel" style="grid-column: 1 / -1; text-align: center;">
         <h3>No classes found</h3>
-        <p>Please add classes first</p>
-        <button class="open-btn" onclick="location.href='add-classes.html'">
+        <p style="margin-bottom:15px; color:#666;">Please create a class first.</p>
+        <button class="btn-primary" onclick="location.href='add-classes.html'">
           Go to Add Classes
         </button>
       </div>`;
@@ -19,12 +19,13 @@ function render() {
 
   classes.forEach(c => {
     const count = students[c]?.length || 0;
+    // Using the new 'stat-card' style for class blocks
     classGrid.innerHTML += `
-      <div class="class-card">
-        <h3>${c}</h3>
-        <div class="count">${count}</div>
-        <button class="open-btn" onclick="openClass('${c}')">
-          + Add Student
+      <div class="stat-card">
+        <h2 style="font-size: 32px;">${c}</h2>
+        <p>${count} Students</p>
+        <button class="btn-primary" style="margin-top:15px; width:100%;" onclick="openClass('${c}')">
+          Manage Students
         </button>
       </div>`;
   });

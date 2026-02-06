@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | TimeEnroll</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="../assets/images/timenroll-logo-short.png" alt="Logo">
+        </div>
+        <nav>
+            <a href="teacher-dashboard.html" class="active">My Dashboard</a>
+            <a href="#" onclick="logout()" style="margin-top: 20px; color: #ffadad;">Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <h1 class="header-title">Welcome, Teacher</h1>
+        <p class="header-subtitle" id="welcomeMsg">Manage your classes and profile</p>
+
+        <div class="glass-panel" style="margin-bottom: 30px; max-width: 500px;">
+            <h3 style="margin-bottom: 15px;">Change Password</h3>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>New Password</label>
+                    <input id="newPass" type="password" placeholder="Enter new password">
+                </div>
+                <button class="btn-primary" onclick="updatePassword()">Update</button>
+            </div>
+        </div>
+
+        <h3 style="margin-bottom: 20px; color:#2d3436;">My Classes</h3>
+        <div id="myClassesGrid" class="stats-grid">
+        </div>
+
+    </main>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/teacher-dashboard.js"></script>
+</body>
+
+</html>

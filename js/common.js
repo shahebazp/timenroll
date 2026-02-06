@@ -1,70 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* ===============================
-       AUTH PROTECTION (ADMIN PAGES)
-    ================================ */
-    if (
-        !window.location.pathname.endsWith("index.html") &&
-        localStorage.getItem("loggedIn") !== "true"
-    ) {
+    /* 1. CHECK LOGIN STATUS
+       If not on login page and not logged in, kick user out. */
+    if (!window.location.pathname.endsWith("index.html") &&
+        localStorage.getItem("loggedIn") !== "true") {
         window.location.href = "index.html";
-        return;
     }
 
-    /* ===============================
-       LOAD SIDEBAR
-    ================================ */
-    const sidebarContainer = document.getElementById("sidebar-container");
+    /* 2. HIGHLIGHT ACTIVE MENU LINK
+       Finds the link that matches current page and makes it white */
+    const currentPage = window.location.pathname.split("/").pop();
+    const navLinks = document.querySelectorAll(".sidebar nav a");
 
-    if (sidebarContainer) {
-        fetch("../partials/sidebar.html")
-            .then(res => res.text())
-            .then(html => {
-                sidebarContainer.innerHTML = html;
-
-                // Active link highlight
-                document.querySelectorAll(".sidebar nav a").forEach(link => {
-                    if (link.href === window.location.href) {
-                        link.classList.add("active");
-                    }
-                });
-            });
-    }
-
-    /* ===============================
-       LOAD LOGOUT MODAL
-    ================================ */
-    fetch("../partials/logout-modal.html")
-        .then(res => res.text())
-        .then(html => {
-            if (!document.getElementById("logoutModal")) {
-                document.body.insertAdjacentHTML("beforeend", html);
-            }
-        });
+    navLinks.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+    });
 
 });
 
-/* ===============================
-   MOBILE SIDEBAR TOGGLE
-================================ */
-function toggleMenu() {
-    const sidebar = document.getElementById("sidebar");
-    if (sidebar) sidebar.classList.toggle("open");
-}
-
-/* ===============================
-   LOGOUT FLOW
-================================ */
-function openLogout() {
-    document.getElementById("logoutModal").style.display = "flex";
-}
-
-function closeLogout() {
-    document.getElementById("logoutModal").style.display = "none";
-}
-
-function confirmLogout() {
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("role");
-    window.location.href = "index.html";
+/* LOGOUT FUNCTIONALITY */
+function logout() {
+    if (confirm("Are you sure you want to logout?")) {
+        localStorage.removeItem("loggedIn");
+        localStorage.removeItem("role");
+        window.location.href = "index.html";
+    }
 }

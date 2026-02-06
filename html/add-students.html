@@ -4,38 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>timeNroll | Add Students</title>
-
-    <!-- Base dashboard styles -->
+    <title>Students | TimeEnroll</title>
     <link rel="stylesheet" href="../css/dashboard.css">
-
-    <!-- Page specific styles -->
-    <link rel="stylesheet" href="../css/add-students.css">
 </head>
 
 <body>
 
-    <!-- Mobile Header -->
-    <header class="mobile-header">
-        <div class="hamburger" onclick="toggleMenu()">☰</div>
-        <div class="title">timeNroll</div>
-    </header>
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="../assets/images/timenroll-logo-short.png" alt="Logo">
+        </div>
+        <nav>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="add-teachers.html">Teachers</a>
+            <a href="add-students.html" class="active">Students</a> <a href="add-classes.html">Classes</a>
+            <a href="timetable.html">Timetable</a>
+            <a href="#" onclick="logout()" style="margin-top: 20px; color: #ffadad;">Logout</a>
+        </nav>
+    </aside>
 
-    <!-- Sidebar -->
-    <div id="sidebar-container"></div>
-
-
-    <!-- Main -->
     <main class="main">
-        <h2>Add Students</h2>
-        <div class="class-grid" id="classGrid"></div>
+        <h1 class="header-title">Manage Students</h1>
+        <p class="header-subtitle">Select a class to add or view students</p>
+
+        <div id="classGrid" class="stats-grid">
+        </div>
     </main>
 
-    <!-- JS -->
-    <script src="../js/add-students.js"></script>
-    <script src="../js/page-specific.js"></script>
     <script src="../js/common.js"></script>
-
+    <script src="../js/add-students.js"></script>
 </body>
 
 </html>
