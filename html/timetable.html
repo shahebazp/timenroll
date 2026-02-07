@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable | TimeEnroll</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+        /* Timetable Specific Styles */
+        .timetable-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th,
+        td {
+            border: 1px solid #eee;
+            padding: 10px;
+            text-align: center;
+            vertical-align: top;
+            font-size: 13px;
+        }
+
+        th {
+            background: #f8f9fa;
+            color: #2d3436;
+            font-weight: 600;
+            padding: 15px;
+        }
+
+        /* Time Column */
+        .time-col {
+            background: #e3f2fd;
+            font-weight: bold;
+            color: #0277bd;
+            width: 100px;
+        }
+
+        /* Break Rows */
+        .break-row {
+            background: #fff3e0;
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Session Cards */
+        .session-card {
+            background: #e0f7fa;
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-left: 3px solid #00bcd4;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .session-card:hover {
+            transform: scale(1.02);
+        }
+
+        .session-practical {
+            background: #f3e5f5;
+            border-left-color: #9c27b0;
+        }
+
+        /* Empty Slot */
+        .add-slot-btn {
+            background: none;
+            border: 1px dashed #ccc;
+            color: #ccc;
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .add-slot-btn:hover {
+            border-color: #00c9a7;
+            color: #00c9a7;
+        }
+
+        /* Batch Badges */
+        .batch-badge {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            background: #2d3436;
+            color: white;
+            margin-right: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="../assets/images/timenroll-logo-short.png" alt="Logo">
+        </div>
+        <nav>
+            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="add-teachers.html">Teachers</a>
+            <a href="add-students.html">Students</a>
+            <a href="add-classes.html">Classes</a>
+            <a href="timetable.html" class="active">Timetable</a>
+            <a href="#" onclick="logout()" style="margin-top: 20px; color: #ffadad;">Logout</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h1 class="header-title">College Timetable</h1>
+
+            <div class="input-group" style="width: 250px;">
+                <select id="classSelect" onchange="loadTimetable()">
+                    <option value="">Select Class...</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="timetable-container">
+            <table id="timeTable">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="sessionModal" class="modal-overlay">
+        <div class="modal-box" style="width: 500px; max-width: 90%; text-align: left;">
+            <h3 id="modalTitle">Add Session</h3>
+
+            <div class="form-grid" style="grid-template-columns: 1fr; gap: 15px; margin-top:15px;">
+
+                <div class="input-group">
+                    <label>Session Type</label>
+                    <select id="sType" onchange="toggleBatches()">
+                        <option value="Theory">Theory (1 Slot)</option>
+                        <option value="Practical">Practical (2 Slots)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Subject Name</label>
+                    <input id="sSubject" type="text" placeholder="e.g. Data Structures">
+                </div>
+
+                <div id="theoryInputs">
+                    <div class="input-group">
+                        <label>Teacher</label>
+                        <select id="sTeacher" class="teacher-list"></select>
+                    </div>
+                </div>
+
+                <div id="batchInputs" style="display:none; background:#f9f9f9; padding:10px; border-radius:10px;">
+                    <p style="font-size:12px; color:#666; margin-bottom:10px;"><b>Batch Configuration:</b></p>
+
+                    <div style="margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:10px;">
+                        <label style="font-size:12px;">Batch A Teacher</label>
+                        <select id="sTeacherA" class="teacher-list"></select>
+                        <input id="sLabA" placeholder="Lab No (e.g. Lab 1)" style="margin-top:5px;">
+                    </div>
+
+                    <div>
+                        <label style="font-size:12px;">Batch B Teacher</label>
+                        <select id="sTeacherB" class="teacher-list"></select>
+                        <input id="sLabB" placeholder="Lab No (e.g. Lab 2)" style="margin-top:5px;">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="modal-actions" style="margin-top:20px;">
+                <button class="action-btn" onclick="closeModal('sessionModal')">Cancel</button>
+                <button class="btn-primary" onclick="saveSession()">Save</button>
+                <button id="btnDelete" class="action-btn" style="background:#ffebee; color:red; display:none;"
+                    onclick="deleteSession()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/common.js"></script>
+    <script src="../js/timetable.js"></script>
+</body>
+
+</html>

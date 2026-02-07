@@ -6,6 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | TimeEnroll</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+    <style>
+        /* Styles for Attendance List */
+        .attendance-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .status-select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -15,20 +36,19 @@
             <img src="../assets/images/timenroll-logo-short.png" alt="Logo">
         </div>
         <nav>
-            <a href="admin-dashboard.html">Dashboard</a>
+            <a href="admin-dashboard.html" class="active">Dashboard</a>
             <a href="add-teachers.html">Teachers</a>
             <a href="add-students.html">Students</a>
             <a href="add-classes.html">Classes</a>
-            <a href="timetable.html">Timetable</a> <a href="#" onclick="logout()"
-                style="margin-top: 20px; color: #ffadad;">Logout</a>
+            <a href="timetable.html">Timetable</a>
+            <a href="#" onclick="logout()" style="margin-top: 20px; color: #ffadad;">Logout</a>
         </nav>
     </aside>
 
     <main class="main">
         <h1 class="header-title">Admin Dashboard</h1>
-        <p class="header-subtitle">Overview of your school data</p>
 
-        <div class="stats-grid">
+        <div class="stats-grid" style="margin-bottom: 30px;">
             <div class="stat-card">
                 <h2 id="teacherCount">0</h2>
                 <p>Teachers</p>
@@ -42,7 +62,86 @@
                 <p>Classes</p>
             </div>
         </div>
+
+        <h3 style="margin-bottom: 15px; color:#2d3436;">Quick Actions</h3>
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+
+            <div class="glass-panel" style="text-align:center;">
+                <h3 style="margin-bottom:10px;">Teacher Attendance</h3>
+                <p style="color:#666; margin-bottom:15px; font-size:14px;">Mark Present, Absent, or On Duty</p>
+                <button class="btn-primary" onclick="openTeacherAttendance()">Mark Attendance</button>
+            </div>
+
+            <div class="glass-panel" style="text-align:center;">
+                <h3 style="margin-bottom:10px;">Download Reports</h3>
+                <p style="color:#666; margin-bottom:15px; font-size:14px;">Get Excel sheets for Students or Teachers</p>
+                <button class="btn-primary" style="background:#0984e3;" onclick="openReports()">Download CSV</button>
+            </div>
+        </div>
     </main>
+
+    <div id="teacherModal" class="modal-overlay">
+        <div class="modal-box" style="width: 500px; max-width: 90%; text-align: left;">
+            <h3>Mark Teacher Attendance</h3>
+            <div class="input-group" style="margin: 15px 0;">
+                <label>Select Date</label>
+                <input type="date" id="attDate" onchange="loadTeacherList()">
+            </div>
+
+            <div id="teacherListContainer"
+                style="max-height: 300px; overflow-y: auto; border: 1px solid #eee; padding: 10px; margin-bottom: 20px;">
+            </div>
+
+            <div class="modal-actions">
+                <button class="action-btn" onclick="closeModal('teacherModal')">Cancel</button>
+                <button class="btn-primary" onclick="saveTeacherAttendance()">Save Attendance</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reportModal" class="modal-overlay">
+        <div class="modal-box" style="width: 450px; max-width: 90%; text-align: left;">
+            <h3 style="margin-bottom: 20px;">Download Reports</h3>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <button class="action-btn" id="btnStudent" onclick="switchReport('student')"
+                    style="flex:1; background:#00c9a7; color:white;">Student Report</button>
+                <button class="action-btn" id="btnTeacher" onclick="switchReport('teacher')"
+                    style="flex:1; background:#f1f2f6;">Teacher Report</button>
+            </div>
+
+            <div id="studentReportForm">
+                <div class="input-group">
+                    <label>Select Class</label>
+                    <select id="reportClass"></select>
+                </div>
+                <div class="input-group" style="margin-top:10px;">
+                    <label>Select Month</label>
+                    <input type="month" id="reportMonthStudent">
+                </div>
+                <button class="btn-primary" style="width:100%; margin-top:20px;"
+                    onclick="downloadStudentReport()">Download Student Excel</button>
+            </div>
+
+            <div id="teacherReportForm" style="display:none;">
+                <div class="input-group">
+                    <label>Filter by Class (Optional)</label>
+                    <select id="reportTeacherClass">
+                        <option value="">All Teachers</option>
+                    </select>
+                </div>
+                <div class="input-group" style="margin-top:10px;">
+                    <label>Select Month</label>
+                    <input type="month" id="reportMonthTeacher">
+                </div>
+                <button class="btn-primary" style="width:100%; margin-top:20px; background:#0984e3;"
+                    onclick="downloadTeacherReport()">Download Teacher Excel</button>
+            </div>
+
+            <button class="action-btn" style="width:100%; margin-top:10px; background:none; color:#666;"
+                onclick="closeModal('reportModal')">Close</button>
+        </div>
+    </div>
 
     <script src="../js/common.js"></script>
     <script src="../js/dashboard.js"></script>

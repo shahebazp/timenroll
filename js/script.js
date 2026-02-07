@@ -1,7 +1,12 @@
-function login() {
+// 1. Import the Database from our Config File
+import { db, collection, getDocs, query, where } from "./firebase-config.js";
+
+// 2. Define the Login Function
+async function login() {
     const idInput = document.getElementById("loginId").value.trim();
     const pwdInput = document.getElementById("password").value.trim();
     const error = document.getElementById("errorMsg");
+    const btn = document.getElementById("loginBtn");
 
     error.innerText = "";
 
@@ -10,42 +15,79 @@ function login() {
         return;
     }
 
-    // 1. CHECK ADMIN LOGIN
-    if (idInput === "ZERO" && pwdInput === "Khan@123") {
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("role", "admin");
-        window.location.href = "html/admin-dashboard.html"; // Note: path assumes we are at root
-        return;
-    }
+    // Show Loading State
+    btn.innerText = "Checking...";
+    btn.disabled = true;
 
-    // 2. CHECK TEACHER LOGIN
-    // We search the 'teachers' list for a matching Email & Password
-    const teachers = JSON.parse(localStorage.getItem("teachers")) || [];
+    try {
+        // --- CHECK 1: ADMIN LOGIN (Static) ---
+        // You can change this password later if you want
+        if (idInput === "ZERO" && pwdInput === "Khan@123") {
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("role", "admin");
+            window.location.href = "html/admin-dashboard.html";
+            return;
+        }
 
-    const foundTeacher = teachers.find(t => t.email === idInput && t.password === pwdInput);
+        // --- CHECK 2: TEACHER LOGIN (From Firebase Database) ---
+        // We look for a teacher with this Email AND Password
+        const q = query(
+            collection(db, "teachers"),
+            where("email", "==", idInput),
+            where("password", "==", pwdInput)
+        );
 
-    if (foundTeacher) {
-        localStorage.setItem("loggedIn", "true");
-        localStorage.setItem("role", "teacher");
-        localStorage.setItem("userEmail", foundTeacher.email); // Save who is logged in
-        window.location.href = "html/teacher-dashboard.html";
-    } else {
-        error.innerText = "Invalid credentials";
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            // Teacher Found!
+            const teacherData = querySnapshot.docs[0].data();
+            localStorage.setItem("loggedIn", "true");
+            localStorage.setItem("role", "teacher");
+            localStorage.setItem("userEmail", teacherData.email);
+            localStorage.setItem("userName", teacherData.name); // Save name for dashboard
+            window.location.href = "html/teacher-dashboard.html";
+        } else {
+            error.innerText = "Invalid credentials";
+            btn.innerText = "Login";
+            btn.disabled = false;
+        }
+
+    } catch (e) {
+        console.error("Login Error:", e);
+        error.innerText = "Connection Error. Please check internet.";
+        btn.innerText = "Login";
+        btn.disabled = false;
     }
 }
 
-// Cursor glow logic (Keep this for the cool effect)
+// 3. Attach Event Listeners (Since we removed onclick from HTML)
 document.addEventListener("DOMContentLoaded", () => {
+
+    // Button Click
+    const loginBtn = document.getElementById("loginBtn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", login);
+    }
+
+    // Enter Key in Password Field
+    const passField = document.getElementById("password");
+    if (passField) {
+        passField.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") login();
+        });
+    }
+
+    // Cursor Glow Effect
     const glow = document.getElementById("cursor-glow");
-    if (!glow) return;
-
-    document.addEventListener("mousemove", (e) => {
-        glow.style.left = e.clientX + "px";
-        glow.style.top = e.clientY + "px";
-        glow.style.opacity = "1";
-    });
-
-    document.addEventListener("mouseleave", () => {
-        glow.style.opacity = "0";
-    });
+    if (glow) {
+        document.addEventListener("mousemove", (e) => {
+            glow.style.left = e.clientX + "px";
+            glow.style.top = e.clientY + "px";
+            glow.style.opacity = "1";
+        });
+        document.addEventListener("mouseleave", () => {
+            glow.style.opacity = "0";
+        });
+    }
 });
