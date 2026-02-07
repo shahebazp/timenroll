@@ -1,9 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where }
+import { getFirestore, collection, getDocs, addDoc, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where }
     from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+// Your web app's Firebase configuration (From your screenshot)
 const firebaseConfig = {
     apiKey: "AIzaSyCo2jynfrV7E0HDKj034MgMi3m8BsLpYk8",
     authDomain: "timenroll.firebaseapp.com",
@@ -18,4 +18,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Export database functions so other files can use them
-export { db, collection, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where };
+export { db, collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, where };

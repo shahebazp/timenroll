@@ -1,12 +1,11 @@
-// 1. Import the Database from our Config File
 import { db, collection, getDocs, query, where } from "./firebase-config.js";
 
-// 2. Define the Login Function
-async function login() {
+// Expose login function to window so HTML can access it if needed
+window.login = async function () {
     const idInput = document.getElementById("loginId").value.trim();
     const pwdInput = document.getElementById("password").value.trim();
     const error = document.getElementById("errorMsg");
-    const btn = document.getElementById("loginBtn");
+    const btn = document.querySelector("button"); // Select the login button
 
     error.innerText = "";
 
@@ -15,13 +14,13 @@ async function login() {
         return;
     }
 
-    // Show Loading State
+    // Show loading state
+    const originalText = btn.innerText;
     btn.innerText = "Checking...";
     btn.disabled = true;
 
     try {
-        // --- CHECK 1: ADMIN LOGIN (Static) ---
-        // You can change this password later if you want
+        // --- 1. ADMIN CHECK (Static) ---
         if (idInput === "ZERO" && pwdInput === "Khan@123") {
             localStorage.setItem("loggedIn", "true");
             localStorage.setItem("role", "admin");
@@ -29,8 +28,8 @@ async function login() {
             return;
         }
 
-        // --- CHECK 2: TEACHER LOGIN (From Firebase Database) ---
-        // We look for a teacher with this Email AND Password
+        // --- 2. FIREBASE CHECK (Teachers) ---
+        // Search for a teacher with matching Email AND Password
         const q = query(
             collection(db, "teachers"),
             where("email", "==", idInput),
@@ -45,40 +44,37 @@ async function login() {
             localStorage.setItem("loggedIn", "true");
             localStorage.setItem("role", "teacher");
             localStorage.setItem("userEmail", teacherData.email);
-            localStorage.setItem("userName", teacherData.name); // Save name for dashboard
+            localStorage.setItem("userName", teacherData.name);
             window.location.href = "html/teacher-dashboard.html";
         } else {
             error.innerText = "Invalid credentials";
-            btn.innerText = "Login";
+            btn.innerText = originalText;
             btn.disabled = false;
         }
 
     } catch (e) {
         console.error("Login Error:", e);
-        error.innerText = "Connection Error. Please check internet.";
-        btn.innerText = "Login";
+        error.innerText = "Connection Error. Check internet.";
+        btn.innerText = originalText;
         btn.disabled = false;
     }
 }
 
-// 3. Attach Event Listeners (Since we removed onclick from HTML)
+// Event Listeners for "Enter" key
 document.addEventListener("DOMContentLoaded", () => {
-
-    // Button Click
-    const loginBtn = document.getElementById("loginBtn");
-    if (loginBtn) {
-        loginBtn.addEventListener("click", login);
-    }
-
-    // Enter Key in Password Field
+    // Check if we are on the login page
     const passField = document.getElementById("password");
     if (passField) {
         passField.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") login();
+            if (event.key === "Enter") window.login();
         });
+
+        // Also attach click listener to button just in case
+        const btn = document.querySelector("button");
+        if (btn) btn.addEventListener("click", window.login);
     }
 
-    // Cursor Glow Effect
+    // Cursor glow logic
     const glow = document.getElementById("cursor-glow");
     if (glow) {
         document.addEventListener("mousemove", (e) => {
