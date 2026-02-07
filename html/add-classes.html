@@ -4,8 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Classes | TimeEnroll</title>
+    <title>Manage Classes | TimeEnroll</title>
     <link rel="stylesheet" href="../css/dashboard.css">
+    <style>
+        .class-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 10px;
+        }
+
+        .class-card span {
+            font-weight: 600;
+            color: #2d3436;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,72 +43,16 @@
 
     <main class="main">
         <h1 class="header-title">Manage Classes</h1>
-        <p class="header-subtitle">Create structured classes for your college</p>
+        <p class="header-subtitle">Create classes (e.g., BCA FY, BSC SY)</p>
 
-        <div class="glass-panel" style="max-width: 700px; margin-bottom: 30px;">
-            <h3 style="margin-bottom: 20px;">Add New Class</h3>
-
-            <div class="form-grid" style="grid-template-columns: repeat(4, 1fr); gap: 15px;">
-
-                <div class="input-group">
-                    <label>Course</label>
-                    <select id="course">
-                        <option value="BCA">BCA</option>
-                        <option value="BCS">BCS</option>
-                        <option value="BSC-IT">BSC-IT</option>
-                        <option value="BSC">BSC</option>
-                        <option value="B.Com">B.Com</option>
-                        <option value="BBA">BBA</option>
-                        <option value="BA">BA</option>
-                        <option value="MCA">MCA</option>
-                        <option value="MCS">MCS</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Year</label>
-                    <select id="year">
-                        <option value="FY">FY (1st)</option>
-                        <option value="SY">SY (2nd)</option>
-                        <option value="TY">TY (3rd)</option>
-                        <option value="Part-I">Part-I</option>
-                        <option value="Part-II">Part-II</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Semester</label>
-                    <select id="sem">
-                        <option value="I">Sem I</option>
-                        <option value="II">Sem II</option>
-                        <option value="III">Sem III</option>
-                        <option value="IV">Sem IV</option>
-                        <option value="V">Sem V</option>
-                        <option value="VI">Sem VI</option>
-                        <option value="VII">Sem VII</option>
-                        <option value="VIII">Sem VIII</option>
-                    </select>
-                </div>
-
-                <div class="input-group">
-                    <label>Div</label>
-                    <select id="div">
-                        <option value="A">Div A</option>
-                        <option value="B">Div B</option>
-                        <option value="C">Div C</option>
-                        <option value="D">Div D</option>
-                        <option value="No Div">No Div</option>
-                    </select>
-                </div>
-
-            </div>
-
-            <button class="btn-primary" onclick="addClass()" style="width: 100%; margin-top: 10px;">Create
-                Class</button>
+        <div class="glass-panel" style="display:flex; gap:10px; align-items:center; margin-bottom:30px;">
+            <input id="classInput" type="text" placeholder="Enter Class Name (e.g. BCA FY)"
+                style="flex:1; padding:12px; border:1px solid #ddd; border-radius:8px;">
+            <button class="btn-primary" onclick="addClass()">+ Add Class</button>
         </div>
 
-        <h3 style="margin-bottom: 15px; color:#2d3436;">Existing Classes</h3>
-        <div id="classList" class="stats-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+        <h3 style="margin-bottom:15px; color:#636e72;">Existing Classes</h3>
+        <div id="classList">
         </div>
     </main>
 
