@@ -1,69 +1,95 @@
-let classes = JSON.parse(localStorage.getItem("classes")) || [];
+import { db, collection, addDoc, getDocs, deleteDoc, doc, query, where } from "./firebase-config.js";
 
-/* RENDER LIST */
-function render() {
+// Make functions global so HTML buttons can see them
+window.addClass = async function () {
+    const input = document.getElementById("classInput");
+    const className = input.value.trim().toUpperCase(); // Force uppercase for consistency
+    const btn = document.querySelector("button[onclick='addClass()']");
+
+    if (!className) {
+        alert("Please enter a class name (e.g., BCA FY)");
+        return;
+    }
+
+    btn.innerText = "Saving...";
+    btn.disabled = true;
+
+    try {
+        // 1. Check for Duplicate
+        const q = query(collection(db, "classes"), where("name", "==", className));
+        const snapshot = await getDocs(q);
+
+        if (!snapshot.empty) {
+            alert("Class already exists!");
+            return; // Stop here
+        }
+
+        // 2. Save to Firebase
+        await addDoc(collection(db, "classes"), { name: className });
+
+        input.value = ""; // Clear input
+        loadClasses(); // Refresh list
+
+    } catch (e) {
+        console.error("Error adding class: ", e);
+        alert("Error saving class. Check console.");
+    } finally {
+        btn.innerText = "+ Add Class";
+        btn.disabled = false;
+    }
+}
+
+window.deleteClass = async function (docId, className) {
+    if (confirm(`Delete ${className}? This might affect students assigned to it.`)) {
+        try {
+            await deleteDoc(doc(db, "classes", docId));
+            loadClasses();
+        } catch (e) {
+            console.error("Error deleting class: ", e);
+            alert("Could not delete class.");
+        }
+    }
+}
+
+async function loadClasses() {
     const list = document.getElementById("classList");
-    list.innerHTML = "";
+    list.innerHTML = "<p style='text-align:center; color:#888;'>Loading classes...</p>";
 
-    if (classes.length === 0) {
-        list.innerHTML = "<p style='color:#888; grid-column: 1/-1;'>No classes added yet.</p>";
-        return;
-    }
+    try {
+        const querySnapshot = await getDocs(collection(db, "classes"));
+        list.innerHTML = "";
 
-    classes.forEach((c, i) => {
-        // We create a nicer looking card for the class
-        list.innerHTML += `
-        <div class="stat-card" style="text-align:left; padding: 20px;">
-            <div style="display:flex; justify-content:space-between; align-items:start;">
-                <div>
-                    <h2 style="font-size: 22px; color:#2d3436; margin-bottom:5px;">${c}</h2>
-                    <p style="font-size:12px; color:#888;">Active Class</p>
-                </div>
-                <button class="action-btn btn-del" onclick="deleteClass(${i})">Delete</button>
-            </div>
-        </div>`;
-    });
-}
+        if (querySnapshot.empty) {
+            list.innerHTML = "<p style='text-align:center; color:#aaa;'>No classes added yet.</p>";
+            return;
+        }
 
-/* ADD CLASS - NOW COMBINES DROPDOWNS */
-function addClass() {
-    const course = document.getElementById("course").value;
-    const year = document.getElementById("year").value;
-    const sem = document.getElementById("sem").value;
-    const div = document.getElementById("div").value;
+        // Sort classes alphabetically
+        const classes = [];
+        querySnapshot.forEach((doc) => {
+            classes.push({ id: doc.id, ...doc.data() });
+        });
 
-    // 1. Construct the Standardized Name
-    // Example: "BCA FY (Sem-I) - A"
-    let finalName = `${course} ${year} (Sem-${sem})`;
+        classes.sort((a, b) => a.name.localeCompare(b.name));
 
-    // Only add Division if it's NOT "No Div"
-    if (div !== "No Div") {
-        finalName += ` - Div ${div}`;
-    }
+        classes.forEach((c) => {
+            list.innerHTML += `
+            <div class="class-card">
+                <span>${c.name}</span>
+                <button class="btn-del" onclick="deleteClass('${c.id}', '${c.name}')">×</button>
+            </div>`;
+        });
 
-    // 2. Check for Duplicates
-    if (classes.includes(finalName)) {
-        alert("This class already exists! (" + finalName + ")");
-        return;
-    }
+        // Also update LocalStorage so other pages (like students) can still read it 
+        // temporarily until we fix them too.
+        const simpleList = classes.map(c => c.name);
+        localStorage.setItem("classes", JSON.stringify(simpleList));
 
-    // 3. Save
-    classes.push(finalName);
-    // Sort classes alphabetically so they look neat
-    classes.sort();
-    localStorage.setItem("classes", JSON.stringify(classes));
-
-    render();
-}
-
-/* DELETE CLASS */
-function deleteClass(index) {
-    if (confirm("Are you sure? This will delete the class and all associated student data.")) {
-        classes.splice(index, 1);
-        localStorage.setItem("classes", JSON.stringify(classes));
-        render();
+    } catch (e) {
+        console.error("Error loading classes: ", e);
+        list.innerHTML = "<p style='color:red; text-align:center;'>Error loading data.</p>";
     }
 }
 
 // Initial Load
-render();
+document.addEventListener("DOMContentLoaded", loadClasses);
